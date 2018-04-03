@@ -6,6 +6,7 @@ int main(int argc, char **argv[]){
 	char *comando = (char*)malloc(1024 * sizeof(char));
 	char *copiaSegura = (char*)malloc(1024 * sizeof(char));
 	char **args;
+	int argssize;
 	int pid;
     int pc[2]; /* Parent to child pipe */
     int cp[2]; /* Child to parent pipe */
@@ -36,11 +37,13 @@ int main(int argc, char **argv[]){
 			comando[strlen(comando)-1] = '\0';
 		}
 
-		
-		
-		
 		//tokeniza a entrada do usuario
-		args = tokeniza(comando, args);
+		args = tokeniza(comando, args, &argssize);
+		
+		if(!isCommandCorrect(args, &argssize)){
+			printf("Nao e possivel utilizar este simbolo para redirecionar a saida do programa.\n");
+			continue;
+		}
 
 		//cocatena o caminho /usr/bin/ ao comando digitado
 		char *caminho = (char*)malloc(1024*sizeof(char));

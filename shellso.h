@@ -10,6 +10,8 @@
 #define true 1
 #define false 0
 
-char** tokeniza(char *comando, char **args);
+char** tokeniza(char *comando, char **args, int *argssize);
 
 int isCommand(char *caminho);
+int isRedirect(char **args, int *agrssize);
+int isCommandCorrect(char **args, int *agrssize);

@@ -1,6 +1,6 @@
 #include "shellso.h"
 
-char** tokeniza(char *comando, char **args){
+char** tokeniza(char *comando, char **args, int *agrssize){
 
 	int i=0, spaceCount=0;
 
@@ -14,7 +14,7 @@ char** tokeniza(char *comando, char **args){
 		if(isspace(comando[i])) spaceCount++;
 		i++;
 	}
-	
+	*agrssize = spaceCount + 1;
 	args = (char**)malloc((spaceCount * sizeof(char*))+1);
 
 	//tokeniza a string salvando os tokens no vetor args
@@ -38,6 +38,24 @@ int isCommand(char *caminho){
 	}
 }
 
-int isRedirect(char **args){
+int isRedirect(char **args, int *agrssize){
+	for (int i = 0; i < *agrssize; ++i){
+		if (!strcmp(args[i], "<=") || !strcmp(args[i], "=>")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
+
+}
+
+int isCommandCorrect(char **args, int *agrssize){
+	for (int i = 0; i < *agrssize; ++i){
+		if (!strcmp(args[i], "<") || !strcmp(args[i], ">")){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }
